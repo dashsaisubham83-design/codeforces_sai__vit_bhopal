@@ -1,0 +1,75 @@
+#problem-2238A
+
+Question:
+Papyrus came up with another puzzle for Frisk to solve. Papyrus brought two arrays a and b of length n and allowed the following two operations to be performed:
+
+    choose any index i (1≤i≤n) and change ai to ai−1. The execution time of such an operation is 1 second.
+    reorder all elements of array a in any way. The execution time of such an operation is c seconds. 
+
+You need to convert array a into array b.
+
+Frisk wants to solve the puzzle as soon as possible. Help Frisk determine the minimum time needed to solve the puzzle. If there is no solution, output −1.
+Input
+
+Each test contains multiple test cases. The first line contains the number of test cases t (1≤t≤500). The description of the test cases follows.
+
+The first line of each test case contains two integers n and c (1≤n,c≤100) — the length of arrays a and b and the cost of the second operation.
+
+The second line of each test case contains n integers a1,a2,…,an (1≤ai≤100) — the elements of the first array.
+
+The third line of each test case contains n integers b1,b2,…,bn (1≤bi≤100) — the elements of the second array.
+Output
+
+For each test case, output a single integer representing the minimum number of seconds required to solve the puzzle, or −1 if it is impossible to solve the puzzle.
+
+
+
+Answer:
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        long long n, c;
+        cin >> n >> c;
+
+        vector<long long> a(n), b(n);
+        for (auto &x : a) cin >> x;
+        for (auto &x : b) cin >> x;
+
+        long long sumA = 0, sumB = 0;
+        for (auto x : a) sumA += x;
+        for (auto x : b) sumB += x;
+        long long S = sumA - sumB; // total decrease needed if a feasible order exists
+
+        // Case 1: no rearrangement, original order must satisfy a_i >= b_i
+        bool feasibleNoRearrange = true;
+        for (int i = 0; i < n; i++) {
+            if (a[i] < b[i]) { feasibleNoRearrange = false; break; }
+        }
+
+        // Case 2: rearrange once, sorted order must satisfy sorted_a[i] >= sorted_b[i]
+        vector<long long> sa = a, sb = b;
+        sort(sa.begin(), sa.end());
+        sort(sb.begin(), sb.end());
+        bool feasibleRearrange = true;
+        for (int i = 0; i < n; i++) {
+            if (sa[i] < sb[i]) { feasibleRearrange = false; break; }
+        }
+
+        long long ans = LLONG_MAX;
+        if (feasibleNoRearrange) ans = min(ans, S);
+        if (feasibleRearrange) ans = min(ans, S + c);
+
+        if (ans == LLONG_MAX) cout << -1 << "\n";
+        else cout << ans << "\n";
+    }
+
+    return 0;
+}
+
