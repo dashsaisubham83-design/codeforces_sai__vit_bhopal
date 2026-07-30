@@ -1,0 +1,64 @@
+#2237B - Annoying the ghost
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int par[2005];
+int findSet(int x){
+    while(par[x] != x){
+        par[x] = par[par[x]];
+        x = par[x];
+    }
+    return x;
+}
+
+int bit[2005], N;
+void update(int i){ for(; i<=N; i+=i&(-i)) bit[i]++; }
+int query(int i){ int s=0; for(; i>0; i-=i&(-i)) s+=bit[i]; return s; }
+
+int main(){
+    int t; scanf("%d",&t);
+    while(t--){
+        int n; scanf("%d",&n);
+        vector<int> a(n+1), b(n+1);
+        for(int i=1;i<=n;i++) scanf("%d",&a[i]);
+        for(int i=1;i<=n;i++) scanf("%d",&b[i]);
+
+        vector<int> L(n+1);
+        bool possible = true;
+        for(int i=1;i<=n;i++){
+            int lo=1, hi=n, res=-1;
+            while(lo<=hi){
+                int mid=(lo+hi)/2;
+                if(b[mid] >= a[i]){ res=mid; hi=mid-1; }
+                else lo=mid+1;
+            }
+            if(res==-1) possible=false;
+            L[i]=res;
+        }
+
+        if(possible){
+            for(int i=1;i<=n+1;i++) par[i]=i;
+            vector<int> p(n+1);
+            for(int i=1;i<=n && possible;i++){
+                int slot = findSet(L[i]);
+                if(slot > n){ possible=false; break; }
+                p[i]=slot;
+                par[slot]=slot+1;
+            }
+
+            if(possible){
+                N=n;
+                for(int i=1;i<=n;i++) bit[i]=0;
+                long long inv=0;
+                for(int i=n;i>=1;i--){
+                    inv += query(p[i]-1);
+                    update(p[i]);
+                }
+                printf("%lld\n", inv);
+                continue;
+            }
+        }
+        printf("-1\n");
+    }
+}
