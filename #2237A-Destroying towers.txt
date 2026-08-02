@@ -1,0 +1,33 @@
+#2237A-Destroying towers
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        int n;
+        scanf("%d", &n);
+        vector<long long> a(n);
+        for(auto &x : a) scanf("%lld", &x);
+
+        // Process towers left to right; by the time tower i fires,
+        // its own height has already been fully minimized by every
+        // tower to its left, so it fires with the smallest value it
+        // will ever have — the strongest possible shot rightward.
+        for(int i = 0; i < n; i++){
+            for(int j = i+1; j < n; j++){
+                if(a[j] > a[i]){
+                    a[j] = a[i];
+                    break;
+                }
+            }
+        }
+
+        long long sum = 0;
+        for(auto x : a) sum += x;
+        printf("%lld\n", sum);
+    }
+    return 0;
+}
