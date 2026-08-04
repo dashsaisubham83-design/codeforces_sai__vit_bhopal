@@ -1,0 +1,33 @@
+#2250A-Threshold Frequency
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        int n;
+        scanf("%d", &n);
+        vector<long long> w(n);
+        for(auto &x : w) scanf("%lld", &x);
+
+        if(n % 2 != 0){
+            printf("NO\n");
+            continue;
+        }
+
+        long long minA = LLONG_MAX; // min of "first-of-pair" elements (must move right: w > k)
+        long long maxB = LLONG_MIN; // max of "second-of-pair" elements (must move left: w < k)
+
+        for(int j = 0; j < n; j += 2){
+            minA = min(minA, w[j]);     // w_{2i-1}
+            maxB = max(maxB, w[j+1]);   // w_{2i}
+        }
+
+        // need an integer k with maxB < k < minA  <=>  minA - maxB >= 2
+        if(minA - maxB >= 2) printf("YES\n");
+        else printf("NO\n");
+    }
+    return 0;
+}
