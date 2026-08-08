@@ -1,0 +1,25 @@
+#2248A - You Delete I Delete
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        char buf[105];
+        scanf("%s", buf);
+        string s(buf);
+
+        // Alice deletes the leftmost '0'
+        int pos0 = s.find('0');
+        s.erase(s.begin() + pos0);
+
+        // Bob deletes the leftmost '1' in the resulting string
+        int pos1 = s.find('1');
+        s.erase(s.begin() + pos1);
+
+        printf("%s\n", s.c_str());
+    }
+    return 0;
+}
