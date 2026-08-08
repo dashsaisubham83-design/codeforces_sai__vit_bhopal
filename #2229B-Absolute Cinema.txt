@@ -1,0 +1,44 @@
+#2229B-Absolute Cinema
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        int n;
+        scanf("%d", &n);
+        vector<long long> a(n), b(n);
+        for(auto &x : a) scanf("%lld", &x);
+        for(auto &x : b) scanf("%lld", &x);
+
+        vector<long long> mn(n), mx(n);
+        long long total = 0, sumMin = 0;
+        for(int i = 0; i < n; i++){
+            mn[i] = min(a[i], b[i]);
+            mx[i] = max(a[i], b[i]);
+            total += a[i] + b[i];
+            sumMin += mn[i];
+        }
+
+        // top two values among mn[] (top2 = -infinity if it doesn't exist)
+        long long top1 = LLONG_MIN, top2 = LLONG_MIN;
+        for(int i = 0; i < n; i++){
+            if(mn[i] > top1){ top2 = top1; top1 = mn[i]; }
+            else if(mn[i] > top2){ top2 = mn[i]; }
+        }
+
+        long long best = total - sumMin + top1; // baseline: everyone gives min, max = top1
+
+        for(int p = 0; p < n; p++){
+            long long sumX = sumMin + (mx[p] - mn[p]);      // upgrade index p to its max
+            long long mRest = (mn[p] == top1) ? top2 : top1; // best "min" among the rest
+            long long maxX = max(mx[p], mRest);
+            best = max(best, total - sumX + maxX);
+        }
+
+        printf("%lld\n", best);
+    }
+    return 0;
+}
