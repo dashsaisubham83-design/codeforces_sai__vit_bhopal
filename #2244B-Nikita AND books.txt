@@ -1,0 +1,25 @@
+#2244B-Nikita AND books
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        int n;
+        scanf("%d", &n);
+        vector<long long> a(n);
+        for(auto &x : a) scanf("%lld", &x);
+
+        long long prefix = 0;
+        bool ok = true;
+        for(int i = 1; i <= n; i++){
+            prefix += a[i-1];
+            long long need = (long long)i * (i+1) / 2;
+            if(prefix < need) ok = false;
+        }
+
+        printf(ok ? "YES\n" : "NO\n");
+    }
+    return 0;
+}
