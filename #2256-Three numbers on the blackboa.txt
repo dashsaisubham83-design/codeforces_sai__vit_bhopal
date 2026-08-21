@@ -1,0 +1,21 @@
+#2256-Three numbers on the blackboard
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        long long a[3];
+        scanf("%lld %lld %lld", &a[0], &a[1], &a[2]);
+        sort(a, a+3);
+        long long x=a[0], y=a[1], z=a[2];
+        long long ans;
+        if(x + y < z) ans = y;
+        else ans = z - x;
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
