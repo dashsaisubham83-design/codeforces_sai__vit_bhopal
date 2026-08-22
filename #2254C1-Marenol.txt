@@ -1,0 +1,32 @@
+#2254C1-Marenol
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        int n;
+        scanf("%d", &n);
+        char bufA[200005], bufB[200005];
+        scanf("%s", bufA);
+        scanf("%s", bufB);
+
+        long long evenA=0, oddA=0, evenB=0, oddB=0;
+        for(int i = 0; i < n; i++){
+            if(bufA[i] == '1'){
+                if(i % 2 == 0) evenA++; else oddA++;
+            }
+        }
+        for(int i = 0; i < n; i++){
+            if(bufB[i] == '1'){
+                if(i % 2 == 0) evenB++; else oddB++;
+            }
+        }
+
+        bool ok = (evenA == evenB) && (oddA == oddB);
+        printf(ok ? "YES\n" : "NO\n");
+    }
+    return 0;
+}
