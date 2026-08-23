@@ -1,0 +1,26 @@
+#2254-Riptide
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        long long a, b, c;
+        scanf("%lld %lld %lld", &a, &b, &c);
+
+        int rounds = 0;
+        while(true){
+            if(a==b || b==c || a==c) break;
+            long long mx = max({a,b,c});
+            long long mn = min({a,b,c});
+            if(a==mx) a--; else if(b==mx) b--; else c--;
+            if(a==mn) a++; else if(b==mn) b++; else c++;
+            rounds++;
+        }
+
+        printf("%d\n", rounds);
+    }
+    return 0;
+}
