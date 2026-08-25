@@ -1,0 +1,31 @@
+#2253A-The Best Card
+
+#include <bits/stdc++.h>
+using namespace std;
+
+const int MAXV = 200002; // n up to 2*10^5, so n+1 up to 200001
+bool isComposite[MAXV + 1];
+
+void sieve(){
+    isComposite[0] = isComposite[1] = true;
+    for(long long i = 2; i <= MAXV; i++){
+        if(!isComposite[i]){
+            for(long long j = i*i; j <= MAXV; j += i){
+                isComposite[j] = true;
+            }
+        }
+    }
+}
+
+int main(){
+    sieve();
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        int n;
+        scanf("%d", &n);
+        bool prime = !isComposite[n+1];
+        printf(prime ? "YES\n" : "NO\n");
+    }
+    return 0;
+}
