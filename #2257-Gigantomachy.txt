@@ -1,0 +1,22 @@
+#2257-Gigantomachy
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        int n, m;
+        scanf("%d %d", &n, &m);
+        vector<long long> a(n), b(m);
+        for(auto &x : a) scanf("%lld", &x);
+        for(auto &x : b) scanf("%lld", &x);
+
+        long long A = a[0] + n - 1; // number of throws Ver needs to defeat Bea
+        long long B = b[0] + m - 1; // number of throws Bea needs to defeat Ver
+
+        // Bea goes first; Bea wins iff A >= B
+        printf(A >= B ? "1\n" : "2\n");
+    }
+    return 0;
+}
