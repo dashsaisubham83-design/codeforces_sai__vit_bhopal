@@ -1,0 +1,41 @@
+#2254B_Evanescent
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        int n;
+        scanf("%d", &n);
+        char buf[200005];
+        scanf("%s", buf);
+        string s(buf);
+
+        // build blocks: (char, length)
+        vector<char> bc;
+        vector<int> blen;
+        int i = 0;
+        while(i < n){
+            int j = i;
+            while(j < n && s[j] == s[i]) j++;
+            bc.push_back(s[i]);
+            blen.push_back(j - i);
+            i = j;
+        }
+
+        int k = bc.size();
+        int best = 0;
+        for(int j = 0; j < k; j++){
+            if(blen[j] == 1){
+                if(j == 0 || j == k-1) continue; // can't delete this char
+                int cand = (bc[j-1] == bc[j+1]) ? 2 : 1;
+                best = max(best, cand);
+            }
+        }
+
+        printf("%d\n", k - best);
+    }
+    return 0;
+}
