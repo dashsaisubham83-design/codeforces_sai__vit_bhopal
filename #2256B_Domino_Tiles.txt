@@ -1,0 +1,46 @@
+#2256B_Domino_Tiles
+#include <bits/stdc++.h>
+using namespace std;
+const long long MOD = 998244353;
+
+long long waysForSubseq(const string &s, int start, int n){
+    // characters at positions start, start+2, start+4, ...
+    int startVal = -1; // 0 or 1, the value at subsequence-index 0
+    bool consistent = true;
+    int idx = 0;
+    for(int pos = start; pos < n; pos += 2, idx++){
+        char c = s[pos];
+        if(c == '?') continue;
+        int val = c - '0';
+        // value at subsequence-index idx = startVal XOR (idx%2)
+        int impliedStart = val ^ (idx % 2);
+        if(startVal == -1){
+            startVal = impliedStart;
+        } else if(startVal != impliedStart){
+            consistent = false;
+            break;
+        }
+    }
+    if(!consistent) return 0;
+    if(startVal == -1) return 2; // fully free
+    return 1;
+}
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        int n;
+        scanf("%d", &n);
+        char buf[200005];
+        scanf("%s", buf);
+        string s(buf);
+
+        long long evenWays = waysForSubseq(s, 0, n);
+        long long oddWays = (n >= 2) ? waysForSubseq(s, 1, n) : 1;
+
+        long long ans = (evenWays * oddWays) % MOD;
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
