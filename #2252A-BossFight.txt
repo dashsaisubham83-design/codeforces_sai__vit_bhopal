@@ -1,0 +1,41 @@
+#2252A-BossFight
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        int n;
+        scanf("%d", &n);
+        vector<long long> a(n);
+        map<long long,int> freq;
+        long long total = 0;
+        for(auto &x : a){
+            scanf("%lld", &x);
+            total += x;
+            freq[x]++;
+        }
+
+        long long maxFreq = 0, maxVal = 0;
+        for(auto &p : freq){
+            if(p.second > maxFreq){
+                maxFreq = p.second;
+                maxVal = p.first;
+            }
+        }
+
+        long long half = (n + 1) / 2; // ceil(n/2)
+        long long ans;
+        if(maxFreq <= half){
+            ans = total;
+        } else {
+            long long wasted = 2*maxFreq - n - 2;
+            ans = total - wasted * maxVal;
+        }
+
+        printf("%lld\n", ans);
+    }
+    return 0;
+}
