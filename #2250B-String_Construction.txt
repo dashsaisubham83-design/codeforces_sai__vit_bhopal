@@ -1,0 +1,30 @@
+#2250B-String_Construction
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        long long n, k;
+        scanf("%lld %lld", &n, &k);
+        if(k == n-1){
+            printf("-1\n");
+            continue;
+        }
+        long long B = n - k;              // number of blocks, B >= 2 here
+        long long leftover = n - B;
+        long long e0 = leftover/2;
+        long long e1 = leftover - e0;
+        long long L1 = 1+e0, L2 = 1+e1;
+
+        string s;
+        s.reserve(n);
+        s.append(L1, '0');   // block 1
+        s.append(L2, '1');   // block 2
+        for(long long i = 3; i <= B; i++){
+            s.push_back((i % 2 == 1) ? '0' : '1'); // remaining blocks, length 1 each
+        }
+        printf("%s\n", s.c_str());
+    }
+}
