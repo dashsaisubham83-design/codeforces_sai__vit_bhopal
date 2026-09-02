@@ -1,0 +1,38 @@
+#2248B-Merge_to_match
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        int n, m;
+        scanf("%d %d", &n, &m);
+        vector<long long> a(n), b(m);
+        for (auto &x : a) scanf("%lld", &x);
+        for (auto &x : b) scanf("%lld", &x);
+
+        if (n < 2LL*m) { printf("NO\n"); continue; }
+
+        sort(a.begin(), a.end());
+        sort(b.begin(), b.end());
+
+        bool ok = true;
+        int p = 0; // next available index for low-anchor phase
+        for (int j = 0; j < m && ok; j++){
+            if (p < n && a[p] < b[j]) p++;
+            else ok = false;
+        }
+
+        if (ok){
+            int L_used = p;      // a[0..L_used-1] consumed
+            int q = n - 1;
+            for (int j = m - 1; j >= 0 && ok; j--){
+                if (q >= L_used && a[q] > b[j]) q--;
+                else ok = false;
+            }
+        }
+
+        printf(ok ? "YES\n" : "NO\n");
+    }
+}
