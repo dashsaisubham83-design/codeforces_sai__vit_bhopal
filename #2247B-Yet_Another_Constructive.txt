@@ -1,0 +1,28 @@
+#2247B-Yet_Another_Constructive
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        long long n, k, m;
+        scanf("%lld %lld %lld", &n, &k, &m);
+
+        if (k > m){
+            printf("NO\n");
+            continue;
+        }
+
+        printf("YES\n");
+        string out;
+        out.reserve(12 * n);
+        for (long long i = 1; i <= n; i++){
+            long long pos = ((i - 1) % k) + 1;
+            long long val = (pos < k) ? 1LL : (m - (k - 1));
+            out += to_string(val);
+            out += (i < n ? ' ' : '\n');
+        }
+        fputs(out.c_str(), stdout);
+    }
+}
