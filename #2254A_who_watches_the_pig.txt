@@ -1,0 +1,33 @@
+#2254A_who_watches_the_pig
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        int n, k;
+        scanf("%d %d", &n, &k);
+        char buf[105];
+        scanf("%s", buf);
+        string s(buf);
+        
+        if (n < 2*k){
+            printf("-1\n");
+            continue;
+        }
+        
+        int flips = 0;
+        // first k positions must be 'R'
+        for (int i = 0; i < k; i++){
+            if (s[i] == 'L') flips++;
+        }
+        // last k positions must be 'L'
+        for (int i = n-k; i < n; i++){
+            if (s[i] == 'R') flips++;
+        }
+        
+        printf("%d\n", flips);
+    }
+    return 0;
+}
