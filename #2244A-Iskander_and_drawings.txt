@@ -1,0 +1,29 @@
+#2244A-Iskander_and_drawings
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        int n;
+        scanf("%d", &n);
+        char buf[15];
+        scanf("%s", buf);
+        string s(buf);
+        
+        int maxLen = 0, cur = 0;
+        for (int i = 0; i < n; i++){
+            if (s[i] == '#') {
+                cur++;
+                maxLen = max(maxLen, cur);
+            } else {
+                cur = 0;
+            }
+        }
+        
+        int ans = (maxLen + 1) / 2; // ceil(maxLen/2), 0 if maxLen=0
+        printf("%d\n", ans);
+    }
+    return 0;
+}
