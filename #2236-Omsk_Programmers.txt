@@ -1,0 +1,35 @@
+#2236-Omsk_Programmers
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        long long a, b, x;
+        scanf("%lld %lld %lld", &a, &b, &x);
+
+        // sequence of values reachable by repeatedly dividing a by x
+        vector<long long> A, B;
+        long long v = a;
+        A.push_back(v);
+        while (v > 0) { v /= x; A.push_back(v); }
+
+        v = b;
+        B.push_back(v);
+        while (v > 0) { v /= x; B.push_back(v); }
+
+        // answer = min over i,j of (i + j + |A[i] - B[j]|)
+        long long best = LLONG_MAX;
+        for (size_t i = 0; i < A.size(); i++) {
+            for (size_t j = 0; j < B.size(); j++) {
+                long long cost = (long long)i + (long long)j + llabs(A[i] - B[j]);
+                best = min(best, cost);
+            }
+        }
+
+        printf("%lld\n", best);
+    }
+    return 0;
+}
