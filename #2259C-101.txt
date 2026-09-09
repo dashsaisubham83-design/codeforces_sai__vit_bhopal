@@ -1,0 +1,48 @@
+#2259C-101
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d",&t);
+    while(t--){
+        int n;
+        scanf("%d",&n);
+        vector<int> a(n);
+        for(auto &x:a) scanf("%d",&x);
+
+        vector<int> candidates, fixed1;
+        for(int i=0;i<n;i++){
+            if(a[i]!=0) candidates.push_back(i);
+            if(a[i]==1) fixed1.push_back(i);
+        }
+
+        if(!candidates.empty()){
+            int p=-1,q=-1,best=-1;
+            if(fixed1.empty()){
+                p=candidates.front(); q=candidates.back();
+                best=q-p+1;
+            } else {
+                for(size_t i=0;i+1<fixed1.size();i++){
+                    int span=fixed1[i+1]-fixed1[i]+1;
+                    if(span>best){best=span;p=fixed1[i];q=fixed1[i+1];}
+                }
+                {
+                    int lp=candidates.front(), rp=fixed1.front();
+                    int span=rp-lp+1;
+                    if(span>best){best=span;p=lp;q=rp;}
+                }
+                {
+                    int lp=fixed1.back(), rp=candidates.back();
+                    int span=rp-lp+1;
+                    if(span>best){best=span;p=lp;q=rp;}
+                }
+            }
+            for(int i=0;i<n;i++) if(a[i]==-1) a[i]=0;
+            a[p]=1; a[q]=1;
+        }
+
+        for(int i=0;i<n;i++) printf("%d ", a[i]);
+        printf("\n");
+    }
+}
