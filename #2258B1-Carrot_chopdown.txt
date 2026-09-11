@@ -1,0 +1,36 @@
+#2258B1-Carrot_chopdown
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d",&t);
+    while(t--){
+        int n,m;
+        scanf("%d %d",&n,&m);
+        vector<long long> cnt(m+2,0);
+        for(int i=0;i<n;i++){
+            int a; scanf("%d",&a);
+            cnt[a]++;
+        }
+        vector<long long> prefix(m+2,0);
+        for(int x=1;x<=m;x++) prefix[x]=prefix[x-1]+cnt[x];
+
+        long long N = n, best = 0;
+        for(int x=1;x<=m;x++){
+            long long Cx  = N - prefix[x];
+            long long c2x = (2LL*x<=m) ? cnt[2*x] : 0;
+            best = max(best, cnt[x] + Cx + c2x);
+        }
+
+        long long top1=0, top2=0;
+        for(int x=1;x<=m;x++){
+            long long v = cnt[x];
+            if(v>top1){ top2=top1; top1=v; }
+            else if(v>top2) top2=v;
+        }
+        if(m>=2) best = max(best, top1+top2);
+
+        printf("%lld\n", best);
+    }
+}
