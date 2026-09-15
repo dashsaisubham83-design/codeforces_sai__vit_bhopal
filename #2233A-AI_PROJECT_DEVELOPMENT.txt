@@ -1,0 +1,27 @@
+#2233A-AI_PROJECT_DEVELOPMENT
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        long long n, x, y, z;
+        scanf("%lld %lld %lld %lld", &n, &x, &y, &z);
+
+        for(long long h = 1; ; h++){
+            long long opt1 = (x + y) * h;
+            long long opt2;
+            if(h <= z){
+                opt2 = x * h;
+            } else {
+                opt2 = x * h + 10 * y * (h - z);
+            }
+            if(max(opt1, opt2) >= n){
+                printf("%lld\n", h);
+                break;
+            }
+        }
+    }
+    return 0;
+}
