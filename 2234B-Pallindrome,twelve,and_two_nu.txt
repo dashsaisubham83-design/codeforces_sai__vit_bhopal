@@ -1,0 +1,15 @@
+2234B-Pallindrome,twelve,and_two_numbers
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t; scanf("%d", &t);
+    while(t--){
+        long long n; scanf("%lld", &n);
+        long long r = n % 12;
+        long long a = (r <= 9) ? r : (r == 10 ? 22 : 11);
+        if (a <= n) printf("%lld %lld\n", a, n - a);
+        else printf("-1\n");
+    }
+}
