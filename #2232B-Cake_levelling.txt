@@ -1,0 +1,29 @@
+#2232B-Cake_levelling
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+        vector<long long> a(n);
+        for (auto &x : a) scanf("%lld", &x);
+
+        long long sum = 0;
+        long long best = LLONG_MAX;
+        string out;
+        out.reserve(n * 8);
+
+        for (int i = 1; i <= n; i++) {
+            sum += a[i - 1];
+            long long val = sum / i;      // sum >= 0, i > 0 -> plain integer division = floor
+            if (val < best) best = val;
+            out += to_string(best);
+            out += (i == n ? '\n' : ' ');
+        }
+        fputs(out.c_str(), stdout);
+    }
+    return 0;
+}
