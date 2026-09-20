@@ -1,0 +1,66 @@
+#2263B-Min_Matrices
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int t;
+    scanf("%d", &t);
+    while(t--){
+        long long n, k;
+        scanf("%lld %lld", &n, &k);
+        if(k < n || k > 2*n-1){
+            printf("-1\n");
+            continue;
+        }
+        long long L = 2*n - k; // 1<=L<=n
+        vector<long long> sizes(L, 1);
+        sizes[L-1] = n - (L-1);
+
+        vector<long long> start(L);
+        long long cur=0;
+        for(int i=0;i<L;i++){ start[i]=cur; cur+=sizes[i]; }
+
+        vector<int> blockOf(n);
+        for(int i=0;i<L;i++)
+            for(long long r=start[i]; r<start[i]+sizes[i]; r++) blockOf[r]=i;
+
+        vector<int> A((size_t)n*n, 0);
+        auto idx=[&](long long r,long long c){ return (size_t)r*n+c; };
+
+        vector<long long> lo(L), hi(L);
+        long long curVal=1;
+        for(int i=0;i<L;i++){
+            long long s=sizes[i];
+            lo[i]=curVal;
+            hi[i]=curVal + s*s - 1;
+            curVal = hi[i]+1;
+        }
+        long long D = curVal-1;
+
+        for(int b=0;b<L;b++){
+            long long s=sizes[b], st=start[b], lov=lo[b];
+            long long bottomRow = st+s-1;
+            for(long long c=0;c<s;c++) A[idx(bottomRow, st+c)] = (int)(lov+c);
+
+            long long val = lov+s;
+            for(long long r=0;r<s-1;r++)
+                for(long long c=0;c<s;c++)
+                    A[idx(st+r, st+c)] = (int)(val++);
+        }
+
+        long long crossVal = D+1;
+        for(long long r=0;r<n;r++)
+            for(long long c=0;c<n;c++)
+                if(blockOf[r]!=blockOf[c]) A[idx(r,c)] = (int)(crossVal++);
+
+        string out;
+        out.reserve((size_t)n*n*7+16);
+        for(long long r=0;r<n;r++){
+            for(long long c=0;c<n;c++){
+                out += to_string(A[idx(r,c)]);
+                out += (c==n-1) ? '\n' : ' ';
+            }
+        }
+        fputs(out.c_str(), stdout);
+    }
+}
