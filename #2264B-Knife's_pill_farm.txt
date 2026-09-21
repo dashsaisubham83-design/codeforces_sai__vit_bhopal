@@ -1,0 +1,36 @@
+#2264B-Knife's_pill_farm
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, m;
+        cin >> n >> m;
+        vector<long long> a(n);
+        for (auto &x : a) cin >> x;
+
+        priority_queue<long long> pq;   // max-heap of the m-1 smallest so far
+        long long sum = 0;
+        long long ans = LLONG_MIN;
+
+        for (int k = 0; k < n; k++) {
+            if (k + 1 >= m) {           // at least m-1 elements before k
+                ans = max(ans, (long long)m * a[k] - sum);
+            }
+            pq.push(a[k]);
+            sum += a[k];
+            if ((int)pq.size() > m - 1) {
+                sum -= pq.top();
+                pq.pop();
+            }
+        }
+        cout << ans << "\n";
+    }
+    return 0;
+}
