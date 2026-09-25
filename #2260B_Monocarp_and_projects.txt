@@ -1,0 +1,35 @@
+#2260B_Monocarp_and_projects
+
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int t;
+    cin >> t;
+    while(t--){
+        ll x, y, k;
+        cin >> x >> y >> k;
+        ll d = y - x;
+        ll hi = x + k - 1;          // last m value
+        ll loopHi = min(hi, d);     // range [x, loopHi] needs explicit mod
+        ll sum = 0;
+
+        if (x <= loopHi) {
+            for (ll m = x; m <= loopHi; m++) {
+                sum += d % m;
+            }
+        }
+
+        ll partBstart = max(x, d + 1);
+        if (partBstart <= hi) {
+            ll cnt = hi - partBstart + 1;
+            sum += d * cnt;
+        }
+
+        cout << sum << "\n";
+    }
+    return 0;
+}
