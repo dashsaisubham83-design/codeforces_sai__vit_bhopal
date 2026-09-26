@@ -1,0 +1,20 @@
+#2230A-optimlal_purchase
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int t;
+    cin >> t;
+    while (t--) {
+        ll n, a, b;
+        cin >> n >> a >> b;
+        ll full = n / 3;
+        ll rem = n % 3;
+        ll ans = full * min(b, 3*a) + min(rem * a, b);
+        cout << ans << "\n";
+    }
+    return 0;
+}
