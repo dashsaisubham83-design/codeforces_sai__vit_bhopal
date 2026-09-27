@@ -1,0 +1,27 @@
+#2260A-Monocarp's_contest
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+        vector<int> a(n);
+        for (auto &x : a) cin >> x;
+
+        int needed = a[0] + a[n-1];
+        int available = 0;
+        for (int i = 1; i < n-1; i++) {
+            if (a[i] == 0) available++;
+        }
+
+        if (needed <= available) cout << needed << "\n";
+        else cout << -1 << "\n";
+    }
+    return 0;
+}
